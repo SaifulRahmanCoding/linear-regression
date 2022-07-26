@@ -65,6 +65,9 @@ if ($opsi == "impor") {
 }elseif($opsi == "delete"){
 	$query = "DELETE FROM tb_training";
 	$delete = mysqli_query($db,$query);
+
+	$query = "DELETE FROM jml_data";
+	mysqli_query($db,$query);
 	
 	if($delete==false) { ?>
 

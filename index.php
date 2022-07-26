@@ -43,16 +43,18 @@
 
 							<table class="table table-bordered border-dark responsive-utilities table-hover text-center">
 								<thead class="text-white">
-									<th scope="col">Tanggal</th>
-									<th scope="col" style="min-width: 150px">x̄ Suhu Ruangan (X1)</th>
-									<th scope="col" style="min-width: 130px">Σ Cacat (Y1)</th>
-									<th scope="col" style="min-width: 80px">X1^2</th>
-									<th scope="col" style="min-width: 80px">Y1^2</th>
-									<th scope="col" style="min-width: 80px">X1*Y1</th>
+									<th scope="col" style="width: 60px !important;">Tanggal</th>
+									<th scope="col" style="min-width: 150px">Rata-Rata Suhu Ruangan (X)</th>
+									<th scope="col" style="min-width: 130px">Jumlah Cacat (Y)</th>
+									<th scope="col" style="min-width: 80px">X^2</th>
+									<th scope="col" style="min-width: 80px">Y^2</th>
+									<th scope="col" style="min-width: 80px">X*Y</th>
 								</thead>
+
 								<tbody>
 									<?php
-									$query = "SELECT id,x,y,pow(x,2) as xx,pow(y,2) as yy,x+y as xy FROM tb_training";
+// ================================ TAHAP 1, hitung hasil x^2,y^2, dan x+y
+									$query = "SELECT id,x,y,pow(x,2) as xx,pow(y,2) as yy,x*y as xy FROM tb_training";
 									$select = mysqli_query($db,$query);
 									foreach ($select as $training) { 
 										$id=$training['id'];
@@ -73,37 +75,70 @@
 										<?php
 										$query_update = "UPDATE tb_training SET xx='$xx',yy='$yy',xy='$xy' WHERE id='$id'";
 										mysqli_query($db,"$query_update");
-									}  ?>
+// ===================================== TAHAP 2, menjumlah pada masing masing data
+										if ($id == 1) {
+											$jml_x = $x;
+											$jml_y = $y;
+											$jml_xx = $xx;
+											$jml_yy = $yy;
+											$jml_xy = $xy;
+										}else{
+											$jml_x = $jml_x+$x;
+											$jml_y = $jml_y+$y;
+											$jml_xx = $jml_xx+$xx;
+											$jml_yy = $jml_yy+$yy;
+											$jml_xy = $jml_xy+$xy;
+										}
+									}
+
+									// atasi error bila variabel jumlah belum ada
+									$n = (isset($id)) ? $id : "";
+									$jml_x = (isset($jml_x)) ? $jml_x : "";
+									$jml_y = (isset($jml_y)) ? $jml_y : "";
+									$jml_xx = (isset($jml_xx)) ? $jml_xx : "";
+									$jml_yy = (isset($jml_yy)) ? $jml_yy : "";
+									$jml_xy = (isset($jml_xy)) ? $jml_xy : "";
+									?>
+									<tr>
+										<td colspan="6" class="bg-white"></td>
+									</tr>
+									<tr class="text-white">
+										<th>n</th>
+										<th>Σ X</th>
+										<th>Σ Y</th>
+										<th>Σ X^2</th>
+										<th>Σ Y^2</th>
+										<th>Σ X*Y</th>
+									</tr>
+									<tr>
+										<td><?php echo $n ?></td>
+										<td><?php echo $jml_x ?></td>
+										<td><?php echo $jml_y ?></td>
+										<td><?php echo $jml_xx ?></td>
+										<td><?php echo $jml_yy ?></td>
+										<td><?php echo $jml_xy ?></td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
+						<?php
+// ==================== TAHAP 3, menghitung a dan b
+						$a = (($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2));
+						$b = (($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2));
+						?>
+						<p class="nilai-acuan fs-4 text-center mt-3">Nilai a = <?php echo round($a,2) ?></p>
+						<p class="nilai-acuan fs-4 text-center mb-0">Nilai b = <?php echo round($b,2) ?></p>
 					</div>
 				</div>
 
-				<div class="col-12 col-md-11 p-3 mt-1 mt-lg-2 table-responsive">
+				<div class="col-12 col-md-11 p-3 mt-1 mt-lg-2">
 					<div class="p-3 shadow">
-						<h2>Data Testing</h2>
 
-						<a href="#" class="btn btn-outline-dark my-3 me-3"> Tambah Data</a>
-						<a href="#" class="btn btn-outline-danger my-3" onclick="return confirm_delete_testing()"> Hapus Data</a>
-
-						<table class="table table-bordered border-dark responsive-utilities table-hover text-center">
-							<thead class="text-white">
-								<th scope="col">x̄ Suhu Ruangan (X2)</th>
-								<th scope="col">Σ Cacat (Y2)</th>
-							</thead>
-							<tbody>
-								<?php for ($i=1; $i < 3; $i++) { ?>
-									<tr>
-									</tr>
-								<?php }  ?>
-							</tbody>
-						</table>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-11 bg-success p-3 mt-1">
-					
+
 				</div>
 
 			</div>
@@ -118,7 +153,7 @@
 				<span class="text-white">© Saiful Rahman 2022 &nbsp|&nbsp Tugas Mata Kuliah Data Mining</span>
 			</div>
 		</div>
-		
+
 	</div>
 	<!-- End Footer -->
 </body>

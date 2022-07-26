@@ -27,10 +27,14 @@ body{
 	font-family: 'Ubuntu2', sans-serif;
 }
 #content th{
-	background-color: #5F006C;
+	background-color: #520189;
 }
 #content th, #content td{
 	vertical-align: middle;
+}
+#content .nilai-acuan{
+	font-family: 'Roboto', sans-serif;
+
 }
 /*End Bagian Content*/
 
@@ -41,10 +45,8 @@ body{
 #footer{
 	background: #2E2E2E;
 }
-#footer .copyright span{
-	/*font-size: 1vw;*/
-}
+
 /*End Bagian Footer*/
 
 
-/*Ukuran*/
+/*Ukuran Layar*/
