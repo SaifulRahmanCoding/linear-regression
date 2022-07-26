@@ -1,2 +1,2 @@
 # linear-regression
- membuat program damat mining dengan metode linear regression
+ membuat program data mining dengan metode linear regression
