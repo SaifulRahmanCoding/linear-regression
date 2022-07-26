@@ -157,7 +157,7 @@
 
 						<?php require('komponen/modal-add-testing.php'); ?>
 
-						<a href="action/action-testing.php?opsi=delete" class="btn btn-outline-danger my-3" onclick="return confirm_delete_training()"> Hapus Data</a>
+						<a href="action/action-testing.php?opsi=delete" class="btn btn-outline-danger my-3" onclick="return confirm_delete_testing()"> Hapus Data</a>
 						<div class="table-responsive d-flex justify-content-center">
 
 							<table class="table table-bordered border-dark responsive-utilities table-hover text-center">
