@@ -73,31 +73,21 @@
 											<td><?php echo $xy ?></td>
 										</tr>
 										<?php
+										// isi data yang sebelumnya kosong
 										$query_update = "UPDATE tb_training SET xx='$xx',yy='$yy',xy='$xy' WHERE id='$id'";
 										mysqli_query($db,"$query_update");
-// ===================================== TAHAP 2, menjumlah pada masing masing data
-										if ($id == 1) {
-											$jml_x = $x;
-											$jml_y = $y;
-											$jml_xx = $xx;
-											$jml_yy = $yy;
-											$jml_xy = $xy;
-										}else{
-											$jml_x = $jml_x+$x;
-											$jml_y = $jml_y+$y;
-											$jml_xx = $jml_xx+$xx;
-											$jml_yy = $jml_yy+$yy;
-											$jml_xy = $jml_xy+$xy;
-										}
 									}
 
+// ================================TAHAP 2, panggil data SUM
+									$select_sum = mysqli_fetch_assoc(mysqli_query($db,"SELECT sum(id) as n, sum(x) as jml_x, sum(y) as jml_y, sum(xx) as jml_xx, sum(yy) as jml_yy, sum(xy) as jml_xy FROM tb_training"));
+
 									// atasi error bila variabel jumlah belum ada
-									$n = (isset($id)) ? $id : "";
-									$jml_x = (isset($jml_x)) ? $jml_x : "";
-									$jml_y = (isset($jml_y)) ? $jml_y : "";
-									$jml_xx = (isset($jml_xx)) ? $jml_xx : "";
-									$jml_yy = (isset($jml_yy)) ? $jml_yy : "";
-									$jml_xy = (isset($jml_xy)) ? $jml_xy : "";
+									$n = (isset($select_sum['n'])) ? $id : "";
+									$jml_x = (isset($select_sum['jml_x'])) ? $select_sum['jml_x'] : "";
+									$jml_y = (isset($select_sum['jml_y'])) ? $select_sum['jml_y'] : "";
+									$jml_xx = (isset($select_sum['jml_xx'])) ? $select_sum['jml_xx'] : "";
+									$jml_yy = (isset($select_sum['jml_yy'])) ? $select_sum['jml_yy'] : "";
+									$jml_xy = (isset($select_sum['jml_xy'])) ? $select_sum['jml_xy'] : "";
 									?>
 									<tr>
 										<td colspan="6" class="bg-white"></td>
@@ -123,11 +113,20 @@
 						</div>
 						<?php
 // ==================== TAHAP 3, menghitung a dan b
-						$a = (($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2));
-						$b = (($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2));
-						?>
-						<p class="nilai-acuan fs-4 text-center mt-3">Nilai a = <?php echo round($a,2) ?></p>
-						<p class="nilai-acuan fs-4 text-center mb-0">Nilai b = <?php echo round($b,2) ?></p>
+						if (!empty($n)){
+
+							$a = (($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2));
+							$b = (($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2));
+							// masukkan kedalam database
+							$jml_data_koefisien_regresi = mysqli_num_rows(mysqli_query($db,"SELECT * FROM koefisien_regresi"));
+							if ($jml_data_koefisien_regresi == 0) {
+								mysqli_query($db,"INSERT INTO koefisien_regresi (a,b) VALUES('$a','$b')");
+							}else{
+								mysqli_query($db,"UPDATE koefisien_regresi SET a='$a',b='$b'");
+							} ?>
+							<p class="nilai-acuan fs-4 text-center">Nilai a = <?php echo round($a,2) ?></p>
+							<p class="nilai-acuan fs-4 text-center mb-0">Nilai b = <?php echo round($b,2) ?></p>
+						<?php } ?>
 					</div>
 				</div>
 
