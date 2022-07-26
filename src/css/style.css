@@ -1,0 +1,50 @@
+*{
+	margin: 0;
+	padding: 0;
+	/*font-family: 'Roboto', sans-serif;*/
+	font-family: 'Ubuntu', sans-serif;
+}
+body{
+	font-size: 14px;
+}
+
+/*Bagian Header*/
+#header .logo span{
+	font-family: 'Roboto', sans-serif !important;
+	text-shadow: 1px 1px 1px grey;
+}
+#header .logo img{
+	max-width: 40px;
+}
+
+/*End Bagian Header*/
+
+
+
+/*Bagian Content*/
+#content h2, .modal-header h5{
+	/*font-family: 'Roboto Condensed', sans-serif;*/
+	font-family: 'Ubuntu2', sans-serif;
+}
+#content th{
+	background-color: #5F006C;
+}
+#content th, #content td{
+	vertical-align: middle;
+}
+/*End Bagian Content*/
+
+
+
+
+/*Bagian Footer*/
+#footer{
+	background: #2E2E2E;
+}
+#footer .copyright span{
+	/*font-size: 1vw;*/
+}
+/*End Bagian Footer*/
+
+
+/*Ukuran*/
