@@ -32,13 +32,15 @@
 		<div class="container">
 			<div class="row justify-content-center">
 
-				<div class="col-12 col-md-11 p-3 mt-1 mt-lg-2">
+				<!-- TRAINING -->
+				<div class="col-12 col-md-8 p-3 mt-1 mt-lg-2">
 					<div class="bg-white shadow-sm p-3">
 						<h2>Data Training</h2>
 
 						<?php require('komponen/modal-add-training.php'); ?>
 
 						<a href="action/action-training.php?opsi=delete" class="btn btn-outline-danger my-3" onclick="return confirm_delete_training()"> Hapus Data</a>
+						<!-- tabel 1 -->
 						<div class="table-responsive">
 
 							<table class="table table-bordered border-dark responsive-utilities table-hover text-center">
@@ -89,9 +91,8 @@
 									$jml_yy = (isset($select_sum['jml_yy'])) ? $select_sum['jml_yy'] : "";
 									$jml_xy = (isset($select_sum['jml_xy'])) ? $select_sum['jml_xy'] : "";
 									?>
-									<tr>
-										<td colspan="6" class="bg-white"></td>
-									</tr>
+
+									<tr> <td colspan="6" class="bg-white"></td> </tr>
 									<tr class="text-white">
 										<th>n</th>
 										<th>Σ X</th>
@@ -111,34 +112,80 @@
 								</tbody>
 							</table>
 						</div>
-						<?php
-// ==================== TAHAP 3, menghitung a dan b
-						if (!empty($n)){
-							// hitung koefisien
-							$a = (($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2));
-							$b = (($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2));
-							// masukkan kedalam database
-							$jml_data_koefisien_regresi = mysqli_num_rows(mysqli_query($db,"SELECT * FROM koefisien_regresi"));
-							if ($jml_data_koefisien_regresi == 0) {
-								mysqli_query($db,"INSERT INTO koefisien_regresi (a,b) VALUES('$a','$b')");
-							}else{
-								mysqli_query($db,"UPDATE koefisien_regresi SET a='$a',b='$b'");
-							} ?>
-							<p class="nilai-acuan fs-4 text-center">Nilai a = <?php echo round($a,2) ?></p>
-							<p class="nilai-acuan fs-4 text-center mb-0">Nilai b = <?php echo round($b,2) ?></p>
-						<?php } ?>
+
+						<!-- tabel 2 -->
+						<div class="table-responsive">
+							<table class="table table-bordered border-dark responsive-utilities table-hover text-center">
+								<thead class="text-white">
+									<th scope="col">a</th>
+									<th scope="col">b</th>
+								</thead>
+								<tbody>
+									<?php
+// ================================ TAHAP 3, menghitung a dan b
+									if (!empty($n)){
+
+										// hitung koefisien
+										$a = (($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2));
+										$b = (($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2));
+										// masukkan kedalam database
+										$jml_data_koefisien_regresi = mysqli_num_rows(mysqli_query($db,"SELECT * FROM koefisien_regresi"));
+										if ($jml_data_koefisien_regresi == 0) {
+											mysqli_query($db,"INSERT INTO koefisien_regresi (a,b) VALUES('$a','$b')");
+										}else{
+											mysqli_query($db,"UPDATE koefisien_regresi SET a='$a',b='$b'");
+										} ?>
+
+										<!-- tampilkan Nilai -->
+										<tr>
+											<td><?php echo round($a,2) ?></td>
+											<td><?php echo round($b,2) ?></td>
+										</tr>
+									<?php } ?>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
+				<!-- END TRAINING -->
 
-				<div class="col-12 col-md-11 p-3 mt-1 mt-lg-2">
+				<!-- TESTING -->
+				<div class="col-12 col-md-4 p-3 mt-1 mt-lg-2">
 					<div class="p-3 shadow">
 
+						<h2>Data Testing</h2>
+
+						<?php require('komponen/modal-add-testing.php'); ?>
+
+						<a href="action/action-testing.php?opsi=delete" class="btn btn-outline-danger my-3" onclick="return confirm_delete_training()"> Hapus Data</a>
+						<div class="table-responsive d-flex justify-content-center">
+
+							<table class="table table-bordered border-dark responsive-utilities table-hover text-center">
+								<thead class="text-white">
+									<th scope="col">Rata-Rata Suhu Ruangan (X)</th>
+									<th scope="col">Jumlah Cacat (Y)</th>
+								</thead>
+
+								<tbody>
+									<?php
+									$query = "SELECT * FROM tb_testing";
+									$select = mysqli_query($db,$query);
+									foreach ($select as $training) { 
+										$x_test=$training['x_test'];
+										$y_test=$training['y_test'];
+										?>
+										<tr>
+											<td><?php echo round($x_test,2) ?></td>
+											<td><?php echo round($y_test,2) ?></td>
+										</tr>
+									<?php } ?>
+								</tbody>
+							</table>
+						</div>
+
 					</div>
 				</div>
-
-				<div class="col-12 col-md-11 bg-success p-3 mt-1">
-
-				</div>
+				<!-- END TESTING -->
 
 			</div>
 		</div>
@@ -157,4 +204,3 @@
 	<!-- End Footer -->
 </body>
 <?php require('config/script.php'); ?>
-</html>

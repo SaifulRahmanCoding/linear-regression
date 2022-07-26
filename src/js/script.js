@@ -16,13 +16,3 @@ function waktu() {
   document.getElementById("menit").innerHTML = waktu.getMinutes();
   document.getElementById("detik").innerHTML = waktu.getSeconds();
 }
-
-// ASCII jadi patokan char
-function hanyaAngka(evt)
-{
- var charCode = (evt.which) ? evt.which : event.keyCode
- // pengecekan jika yang di input adalah angka, maka akan mengembalikan nilai true pada form
- if (charCode > 31 && (charCode < 48 || charCode > 57))
-  return false;
-  return true;
-}

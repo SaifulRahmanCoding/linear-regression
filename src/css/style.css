@@ -19,8 +19,6 @@ body{
 
 /*End Bagian Header*/
 
-
-
 /*Bagian Content*/
 #content h2, .modal-header h5{
 	/*font-family: 'Roboto Condensed', sans-serif;*/
@@ -38,15 +36,9 @@ body{
 }
 /*End Bagian Content*/
 
-
-
-
 /*Bagian Footer*/
 #footer{
 	background: #2E2E2E;
 }
 
 /*End Bagian Footer*/
-
-
-/*Ukuran Layar*/
