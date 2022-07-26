@@ -114,7 +114,7 @@
 						<?php
 // ==================== TAHAP 3, menghitung a dan b
 						if (!empty($n)){
-
+							// hitung koefisien
 							$a = (($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2));
 							$b = (($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2));
 							// masukkan kedalam database
