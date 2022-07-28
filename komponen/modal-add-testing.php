@@ -14,13 +14,13 @@
         <div class="modal-body">
 
           <div class="form-group mb-1 d-flex align-items-center">
-            <label for="nilai_test" class="mb-2 col-3 pt-2 pb-2">Nilai Testing</label>
+            <label for="nilai_test" class="mb-2 col-4 pt-2 pb-2">Nilai Testing</label>
 
-            <input name="nilai_test" id="nilai_test" class="form-control bg-light" type="number">
+            <input name="nilai_test" id="nilai_test" class="form-control bg-light" type="number" required>
           </div>
 
           <div class="form-group mb-1 d-flex align-items-center">
-            <label for="parameter" class="mb-2 col-3 pt-2 pb-2">Parameter</label>
+            <label for="parameter" class="mb-2 col-4 pt-2 pb-2">Parameter</label>
 
             <select id="parameter" class="form-select bg-light" name="parameter" required>
               <option value="">- Pilih</option>
