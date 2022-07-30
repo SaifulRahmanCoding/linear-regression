@@ -4,7 +4,7 @@
 <div class="modal fade" id="ImportData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ImportDataLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
 
-    <form action="action/action-training.php?opsi=impor" method="POST" enctype="multipart/form-data">
+    <form action="action/action-training.php?opsi=import" method="POST" enctype="multipart/form-data">
 
       <div class="modal-content px-3">
         <div class="modal-header">

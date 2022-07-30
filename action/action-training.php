@@ -8,10 +8,10 @@ require_once('../vendor/SpreadsheetReader.php');
 
 $opsi = ($_GET['opsi']) ? $_GET['opsi'] : "";
 
-if ($opsi == "impor") {
+if ($opsi == "import") {
 	
 	$allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-
+	// fungsi in_array adalah untuk cek apakah nilainya false or true dengan sesuai kondisi yang telah ditentukan
 	if(in_array($_FILES["file"]["type"],$allowedFileType)){
 
         // piindahkan file ke folder uploads pada projek
@@ -33,27 +33,33 @@ if ($opsi == "impor") {
 
 				$cacat = (isset($kolom[1])) ? $kolom[1] : "";
 
-				if (!empty($suhu) || !empty($cacat)) {
+				if (!empty($suhu) && !empty($cacat)) {
 					
 					$query = "INSERT INTO tb_training(x,y) VALUES('$suhu','$cacat')";
 					$result = mysqli_query($db, $query);
-
-					if($result==false) { ?>
-						<script type='text/javascript'>
-							alert('Gagal Impor Data');
-							window.location.href="../index.php";
-						</script>
-					<?php }else{ ?>
-						<script type='text/javascript'>
-							alert('Sukses Impor Data');
-							window.location.href="../index.php";
-						</script> 
-						<?php
-					}
 				}
 			}
 
+			// peng-kondisian munculan nilai $result
+			if($result==false) { ?>
+				<script type='text/javascript'>
+					alert('Gagal Impor Data');
+					window.location.href="../index.php";
+				</script>
+				<?php 
+			}else{
+				// agar file tidak memakan rauang, terutama nanti ketika di hosting. maka, setelah selesai di gunakan hapus file yang sudah digunakan pada direktory upload.
+				if (file_exists($targetPath)) :
+					unlink($targetPath);
+				endif ?>
+
+				<script type='text/javascript'>
+					alert('Sukses Impor Data');
+					window.location.href="../index.php";
+				</script> 
+			<?php }
 		}
+
 	}else { ?>
 		<script type='text/javascript'>
 			alert('Tipe File Salah, Tolong Impor file .xls atau .xlsx');

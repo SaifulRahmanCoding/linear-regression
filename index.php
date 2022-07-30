@@ -127,10 +127,12 @@ session_start();
 									<?php
 // ================================ TAHAP 3, menghitung a dan b
 									if (!empty($n)){
-
 										// hitung koefisien
-										$a = round((($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2)),2);
-										$b = round((($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2)),2);
+										// jika jumlah data n hanya satu atau data yang dihitung bernilai 0 pada bagian pembagi, maka set nilai a dan b jadikan 0.
+										$deteksi_zero = ($n*$jml_xx) - pow($jml_x,2);
+
+										$a = ($deteksi_zero == 0) ? 0 : round((($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2)),2);
+										$b = ($deteksi_zero == 0) ? 0 : round((($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2)),2);
 
 										// isi nilai a dan b sebagai session untuk digunakan nantinya pada action testing 
 										$_SESSION['a'] = $a;
@@ -155,9 +157,14 @@ session_start();
 
 						<h2>Data Testing</h2>
 
-						<?php require('komponen/modal-add-testing.php'); ?>
+						<?php
+						$deteksi_zero = (!empty($n)) ? ($n*$jml_xx) - pow($jml_x,2) : 0;
+						if($n>1 && $deteksi_zero!=0) :
+							require('komponen/modal-add-testing.php'); ?>
+						<?php endif ?>
 
 						<a href="action/action-testing.php?opsi=delete-all" class="btn btn-outline-danger my-3" onclick="return confirm_delete_testing()"> Hapus Data</a>
+
 						<div class="table-responsive d-flex justify-content-center">
 
 							<table class="table table-bordered border-dark responsive-utilities table-hover text-center">
