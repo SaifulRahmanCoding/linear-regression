@@ -62,7 +62,6 @@ elseif($opsi == "delete-all"){
 		mysqli_query($db,"ALTER TABLE tb_testing auto_increment=1"); ?>
 
 		<script type='text/javascript'>
-			alert('Sukses Hapus Data');
 			window.location.href="../index.php";
 		</script> 
 		<?php	
@@ -91,7 +90,6 @@ elseif($opsi == "delete"){
 		mysqli_query($db,"ALTER TABLE tb_testing auto_increment=$ai"); ?>
 
 		<script type='text/javascript'>
-			alert('Sukses Hapus Data');
 			window.location.href="../index.php";
 		</script> 
 		<?php	

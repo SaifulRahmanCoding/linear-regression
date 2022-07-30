@@ -192,7 +192,7 @@ session_start();
 											<td><?php echo $x_test ?></td>
 											<td><?php echo $y_test ?></td>
 											<td>
-												<a href="action/action-testing.php?id=<?php echo $id_test ?>&opsi=delete" class="hapus-testing text-decoration-none text-danger">Hapus</a>
+												<a href="action/action-testing.php?id=<?php echo $id_test ?>&opsi=delete" class="hapus-testing text-decoration-none text-danger" onclick="return confirm_delete()">Hapus</a>
 											</td>
 										</tr>
 									<?php } ?>

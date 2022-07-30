@@ -1,10 +1,14 @@
 // konirmasi hapus data training
 function confirm_delete_training(){
-  return confirm("Anda Yakin Menghapus Data Training?");
+  return confirm("Anda Yakin Menghapus Seluruh Data Training?");
 }
 // konirmasi hapus data testing
 function confirm_delete_testing(){
-  return confirm("Anda Yakin Menghapus Data Testing?");
+  return confirm("Anda Yakin Menghapus Seluruh Data Testing?");
+}
+// konirmasi hapus data testing
+function confirm_delete(){
+  return confirm("Anda Yakin Menghapus Data Ini?");
 }
 // jam
 window.setTimeout("waktu()", 1000);
