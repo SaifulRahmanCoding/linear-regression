@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2022 at 09:49 PM
+-- Generation Time: Jul 30, 2022 at 07:02 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -20,24 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `dm_lr`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `koefisien_regresi`
---
-
-CREATE TABLE `koefisien_regresi` (
-  `a` double DEFAULT NULL,
-  `b` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `koefisien_regresi`
---
-
-INSERT INTO `koefisien_regresi` (`a`, `b`) VALUES
-(-27.022222222222, 1.5555555555556);
 
 -- --------------------------------------------------------
 
