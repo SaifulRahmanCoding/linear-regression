@@ -36,11 +36,11 @@ if ($opsi == "input") {
 	if($insert==false) { ?>
 		<script type='text/javascript'>
 			alert('Gagal Menambahkan Data');
-			window.location.href="../index.php?";
+			window.location.href="../index.php";
 		</script>
 	<?php }else{ ?>
 		<script type='text/javascript'>
-			window.location.href="../index.php?";
+			window.location.href="../index.php";
 		</script> 
 	<? }
 }
@@ -63,7 +63,7 @@ elseif($opsi == "delete-all"){
 
 		<script type='text/javascript'>
 			alert('Sukses Hapus Data');
-			window.location.href="../index.php?";
+			window.location.href="../index.php";
 		</script> 
 		<?php	
 
@@ -80,7 +80,7 @@ elseif($opsi == "delete"){
 
 		<script type='text/javascript'>
 			alert('Gagal Hapus Data');
-			window.location.href="../index.php?";
+			window.location.href="../index.php";
 		</script>
 
 	<?php }else{
@@ -92,7 +92,7 @@ elseif($opsi == "delete"){
 
 		<script type='text/javascript'>
 			alert('Sukses Hapus Data');
-			window.location.href="../index.php?";
+			window.location.href="../index.php";
 		</script> 
 		<?php	
 

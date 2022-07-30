@@ -41,12 +41,12 @@ if ($opsi == "impor") {
 					if($result==false) { ?>
 						<script type='text/javascript'>
 							alert('Gagal Impor Data');
-							window.location.href="../index.php?";
+							window.location.href="../index.php";
 						</script>
 					<?php }else{ ?>
 						<script type='text/javascript'>
 							alert('Sukses Impor Data');
-							window.location.href="../index.php?";
+							window.location.href="../index.php";
 						</script> 
 						<?php
 					}
@@ -57,7 +57,7 @@ if ($opsi == "impor") {
 	}else { ?>
 		<script type='text/javascript'>
 			alert('Tipe File Salah, Tolong Impor file .xls atau .xlsx');
-			window.location.href="../index.php?";
+			window.location.href="../index.php";
 		</script>
 	<?php }
 
@@ -73,7 +73,7 @@ if ($opsi == "impor") {
 
 		<script type='text/javascript'>
 			alert('Gagal Hapus Data');
-			window.location.href="../index.php?";
+			window.location.href="../index.php";
 		</script>
 
 	<?php }else{
@@ -82,7 +82,7 @@ if ($opsi == "impor") {
 
 		<script type='text/javascript'>
 			alert('Sukses Hapus Data');
-			window.location.href="../index.php?";
+			window.location.href="../index.php";
 		</script> 
 		<?php	
 
