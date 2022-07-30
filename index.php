@@ -156,16 +156,21 @@ session_start();
 					<div class="p-3 shadow">
 
 						<h2>Data Testing</h2>
-
 						<?php
+						if(isset($a) && isset($b)) : ?>
+							<!-- Rumus untuk menentukan nilai X dan Y dari koefisien regresi a dan b -->
+							<span class="d-block"> <b>X =</b> (Y - <?php echo ($a < 0) ? '('.$a.')' : $a ?>) / <?php echo $b ?> </span>
+							<span class="d-block"> <b>Y =</b> <?php echo $a ?> + (<?php echo $b ?>*X) </span>
+						<?php endif;
+
 						$deteksi_zero = (!empty($n)) ? ($n*$jml_xx) - pow($jml_x,2) : 0;
 						if($n>1 && $deteksi_zero!=0) :
 							require('komponen/modal-add-testing.php'); ?>
-						<?php endif ?>
+						<?php endif; ?>
 
 						<a href="action/action-testing.php?opsi=delete-all" class="btn btn-outline-danger my-3" onclick="return confirm_delete_testing()"> Hapus Data</a>
 
-						<div class="table-responsive d-flex justify-content-center">
+						<div class="table-responsive">
 
 							<table class="table table-bordered border-dark responsive-utilities table-hover text-center">
 								<thead class="text-white">
