@@ -1,4 +1,5 @@
 <?php
+session_start();
 // koneksi database 
 require_once('../src/koneksi.php');
 
@@ -12,10 +13,9 @@ if ($opsi == "input") {
 	if ($nilai_test < 0 && $parameter == "unit") {
 		$nilai_test = 0;
 	}
-
-	$koefisien_regresi = mysqli_fetch_assoc(mysqli_query($db,"SELECT * FROM koefisien_regresi"));
-	$a = round($koefisien_regresi['a'],2);
-	$b = round($koefisien_regresi['b'],2);
+	// definsikan variabel dari session a dan b
+	$a = round($_SESSION['a'],2);
+	$b = round($_SESSION['b'],2);
 
 	// model persamaan regresi linear adalah Y = a + (b*X) dan untuk X = (Y - a) / b
 	if ($parameter == "suhu") {
@@ -54,7 +54,7 @@ elseif($opsi == "delete-all"){
 
 		<script type='text/javascript'>
 			alert('Gagal Hapus Data');
-			window.location.href="../index.php?";
+			window.location.href="../index.php";
 		</script>
 
 	<?php }else{

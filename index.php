@@ -131,17 +131,11 @@ session_start();
 										// hitung koefisien
 										$a = round((($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2)),2);
 										$b = round((($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2)),2);
-										// masukkan kedalam database
-										$jml_data_koefisien_regresi = mysqli_num_rows(mysqli_query($db,"SELECT * FROM koefisien_regresi"));
-										if ($jml_data_koefisien_regresi == 0) {
-											mysqli_query($db,"INSERT INTO koefisien_regresi (a,b) VALUES('$a','$b')");
-										}else{
-											mysqli_query($db,"UPDATE koefisien_regresi SET a='$a',b='$b'");
-										}
+
+										// isi nilai a dan b sebagai session untuk digunakan nantinya pada action testing 
 										$_SESSION['a'] = $a;
 										$_SESSION['b'] = $b;
 										?>
-
 										<!-- tampilkan Nilai -->
 										<tr>
 											<td><?php echo $a ?></td>
