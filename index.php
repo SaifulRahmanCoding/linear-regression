@@ -1,4 +1,7 @@
-<?php require_once('src/koneksi.php'); ?>
+<?php 
+require_once('src/koneksi.php'); 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,7 +83,7 @@
 										mysqli_query($db,"$query_update");
 									}
 
-// ================================TAHAP 2, panggil data SUM
+// ================================ TAHAP 2, panggil data SUM
 									$select_sum = mysqli_fetch_assoc(mysqli_query($db,"SELECT sum(x) as jml_x, sum(y) as jml_y, sum(xx) as jml_xx, sum(yy) as jml_yy, sum(xy) as jml_xy FROM tb_training"));
 
 									// atasi error bila variabel jumlah belum ada
@@ -126,20 +129,23 @@
 									if (!empty($n)){
 
 										// hitung koefisien
-										$a = (($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2));
-										$b = (($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2));
+										$a = round((($jml_y*$jml_xx) - ($jml_x*$jml_xy)) / (($n*$jml_xx) - pow($jml_x,2)),2);
+										$b = round((($n*$jml_xy) - ($jml_x*$jml_y)) / (($n*$jml_xx) - pow($jml_x,2)),2);
 										// masukkan kedalam database
 										$jml_data_koefisien_regresi = mysqli_num_rows(mysqli_query($db,"SELECT * FROM koefisien_regresi"));
 										if ($jml_data_koefisien_regresi == 0) {
 											mysqli_query($db,"INSERT INTO koefisien_regresi (a,b) VALUES('$a','$b')");
 										}else{
 											mysqli_query($db,"UPDATE koefisien_regresi SET a='$a',b='$b'");
-										} ?>
+										}
+										$_SESSION['a'] = $a;
+										$_SESSION['b'] = $b;
+										?>
 
 										<!-- tampilkan Nilai -->
 										<tr>
-											<td><?php echo round($a,2) ?></td>
-											<td><?php echo round($b,2) ?></td>
+											<td><?php echo $a ?></td>
+											<td><?php echo $b ?></td>
 										</tr>
 									<?php } ?>
 								</tbody>
@@ -157,13 +163,14 @@
 
 						<?php require('komponen/modal-add-testing.php'); ?>
 
-						<a href="action/action-testing.php?opsi=delete" class="btn btn-outline-danger my-3" onclick="return confirm_delete_testing()"> Hapus Data</a>
+						<a href="action/action-testing.php?opsi=delete-all" class="btn btn-outline-danger my-3" onclick="return confirm_delete_testing()"> Hapus Data</a>
 						<div class="table-responsive d-flex justify-content-center">
 
 							<table class="table table-bordered border-dark responsive-utilities table-hover text-center">
 								<thead class="text-white">
-									<th scope="col">Rata-Rata Suhu Ruangan (X)</th>
+									<th scope="col" style="min-width: 130px;">Rata-Rata Suhu Ruangan (X)</th>
 									<th scope="col">Jumlah Cacat (Y)</th>
+									<th scope="col">Aksi</th>
 								</thead>
 
 								<tbody>
@@ -171,12 +178,16 @@
 									$query = "SELECT * FROM tb_testing";
 									$select = mysqli_query($db,$query);
 									foreach ($select as $training) { 
-										$x_test=$training['x_test'];
-										$y_test=$training['y_test'];
+										$id_test=$training['id_test'];
+										$x_test= round($training['x_test'],2);
+										$y_test= round($training['y_test'],2);
 										?>
 										<tr>
-											<td><?php echo round($x_test,2) ?></td>
-											<td><?php echo round($y_test,2) ?></td>
+											<td><?php echo $x_test ?></td>
+											<td><?php echo $y_test ?></td>
+											<td>
+												<a href="action/action-testing.php?id=<?php echo $id_test ?>&opsi=delete" class="hapus-testing text-decoration-none text-danger">Hapus</a>
+											</td>
 										</tr>
 									<?php } ?>
 								</tbody>
