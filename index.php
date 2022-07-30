@@ -81,10 +81,10 @@
 									}
 
 // ================================TAHAP 2, panggil data SUM
-									$select_sum = mysqli_fetch_assoc(mysqli_query($db,"SELECT sum(id) as n, sum(x) as jml_x, sum(y) as jml_y, sum(xx) as jml_xx, sum(yy) as jml_yy, sum(xy) as jml_xy FROM tb_training"));
+									$select_sum = mysqli_fetch_assoc(mysqli_query($db,"SELECT sum(x) as jml_x, sum(y) as jml_y, sum(xx) as jml_xx, sum(yy) as jml_yy, sum(xy) as jml_xy FROM tb_training"));
 
 									// atasi error bila variabel jumlah belum ada
-									$n = (isset($select_sum['n'])) ? $id : "";
+									$n = (isset($id)) ? $id : "";
 									$jml_x = (isset($select_sum['jml_x'])) ? $select_sum['jml_x'] : "";
 									$jml_y = (isset($select_sum['jml_y'])) ? $select_sum['jml_y'] : "";
 									$jml_xx = (isset($select_sum['jml_xx'])) ? $select_sum['jml_xx'] : "";
