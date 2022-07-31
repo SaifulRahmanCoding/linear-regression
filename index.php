@@ -84,15 +84,15 @@ session_start();
 									}
 
 // ================================ TAHAP 2, panggil data SUM
-									$select_sum = mysqli_fetch_assoc(mysqli_query($db,"SELECT sum(x) as jml_x, sum(y) as jml_y, sum(xx) as jml_xx, sum(yy) as jml_yy, sum(xy) as jml_xy FROM tb_training"));
+									$select_sum = mysqli_fetch_assoc(mysqli_query($db,"SELECT count(id) as n, sum(x) as jml_x, sum(y) as jml_y, sum(xx) as jml_xx, sum(yy) as jml_yy, sum(xy) as jml_xy FROM tb_training"));
 
 									// atasi error bila variabel jumlah belum ada
-									$n = (isset($id)) ? $id : "";
-									$jml_x = (isset($select_sum['jml_x'])) ? $select_sum['jml_x'] : "";
-									$jml_y = (isset($select_sum['jml_y'])) ? $select_sum['jml_y'] : "";
-									$jml_xx = (isset($select_sum['jml_xx'])) ? $select_sum['jml_xx'] : "";
-									$jml_yy = (isset($select_sum['jml_yy'])) ? $select_sum['jml_yy'] : "";
-									$jml_xy = (isset($select_sum['jml_xy'])) ? $select_sum['jml_xy'] : "";
+									$n = (!empty($select_sum['n'])) ? $select_sum['n'] : "";
+									$jml_x = (!empty($select_sum['jml_x'])) ? $select_sum['jml_x'] : "";
+									$jml_y = (!empty($select_sum['jml_y'])) ? $select_sum['jml_y'] : "";
+									$jml_xx = (!empty($select_sum['jml_xx'])) ? $select_sum['jml_xx'] : "";
+									$jml_yy = (!empty($select_sum['jml_yy'])) ? $select_sum['jml_yy'] : "";
+									$jml_xy = (!empty($select_sum['jml_xy'])) ? $select_sum['jml_xy'] : "";
 									?>
 
 									<tr> <td colspan="6" class="bg-white"></td> </tr>
